@@ -1,0 +1,13 @@
+# philoseliza
+
+Port of Wiezenbaum's Eliza to Clojure.
+
+## Usage
+
+FIXME: write
+
+## License
+
+Copyright (C) 2011 FIXME
+
+Distributed under the BSD license
