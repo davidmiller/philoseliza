@@ -98,11 +98,23 @@ in TARGET with it's value."
 ;; Rules
 ;;
 (defn make-rule
-  "From the args to this function, massage a map with PAT as
-:pattern and REST as the vector values of RESPONSES")
+  "From the args to this function, massage a map with PATTERN as
+:pattern and RESPONSES as the vector values of RESPONSES"
+  [pattern & responses]
+  {:pattern pattern :responses responses})
 
 
 (def Rules
-  [
-   {:pattern }
+  '[
+   {:pattern ((?* ?X) hello (?* ?y))
+    :responses [(How do you do. Please state your problem)]}
+   {:pattern ((?* ?x) I want (?* ?y))
+    :responses [(What would it mean to you if you got ?y ?)
+                (Why do you want ?y ?)
+                (Suppose you got ?y soon...)]}
+   {:pattern ((?* ?x) if (?* ?y))
+    :reposnses [(Do you really think its likely that ?y ?)
+                (Do you wish that ?y ?)
+                (What do you think about ?y ?)
+                (Really-- if ?y ?)]}
    ])
