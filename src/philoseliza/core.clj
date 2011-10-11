@@ -38,6 +38,11 @@ after START"
   [pred coll start]
   (filter (fn [x] (>= x start)) (positions pred coll)))
 
+(defn random-elt
+  "Take a random element from SEQ"
+  [seq]
+  (first seq))
+
 ;"Pattern match success with no vars"
 (def no-bindings {} )
 
@@ -117,4 +122,29 @@ in TARGET with it's value."
                 (Do you wish that ?y ?)
                 (What do you think about ?y ?)
                 (Really-- if ?y ?)]}
+   {:pattern ((?* ?x) no (?* ?y))
+    :responses [(Why not?)
+                (You are being a bit negative)
+                (Are you saying NO just to be negative ?)]}
+   {:pattern ((?* ?x) I was (?* ?y))
+    :responses [(Were you really?)
+                (Perhaps I already knew you were ?y)
+                (Why do you tell me you were ?y now ?)]}
+   {:pattern ((?* ?x) I feel (?* ?y))
+    :responses [(Do you often feel ?y ?)]}
+   {:pattern ((?* ?x) I felt (?* ?y))
+    :responses [(What other feelings do you have ?)]}
    ])
+
+(defn use-eliza-rules
+  "Find a rule with which to transform INPUT into a response"
+  [input]
+  (random-elt
+   (filter
+   (fn [x] x)
+   (map (fn [rule]
+         (let
+             [result (pat-match (:pattern rule) input)]
+           (if result
+             (subst result (random-elt (:responses rule))))))
+       Rules))))
